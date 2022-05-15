@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Roll Dice</title>
+    <style>
+
+        .dice {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 50px;
+            width: 50px;
+            margin: 10px;
+            background-color: cornflowerblue;
+        }
+        .dots {
+            height: 8px;
+            width: 8px;
+            margin: 4px;
+            background-color: black;
+        }
+
+    </style>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+
+        <a href="/roll-dice"><h1>Dice Game </h1></a>
+        (3 rolls)
+        <h3>Guess what number the dice will hit!</h3>
+        <div style="display: flex; justify-content: space-around; width: 200px; flex-wrap: wrap" >
+            <a href="/roll-dice/1">
+                <div class="dice">
+                    <div class="dots"></div>
+                </div>
+            </a>
+
+
+            <a href="/roll-dice/2">
+                <div class="dice">
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                </div>
+            </a>
+
+
+            <a href="/roll-dice/3">
+                <div class="dice">
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                </div>
+            </a>
+
+
+            <a href="/roll-dice/4">
+                <div class="dice">
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                </div>
+            </a>
+
+
+            <a href="/roll-dice/5">
+                <div class="dice">
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                </div>
+            </a>
+
+
+            <a href="/roll-dice/6">
+                <div class="dice">
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                </div>
+            </a>
+        </div>
+
+
+        <div th:if="${roll}">
+
+
+            <div style="display: flex;">
+                <h3 style="display: flex; align-items: center; margin-right: 10px">Numbers rolled:</h3>
+                <span th:each="randomNumber : ${randomNumbers}">
+                    <h1 style="padding-right: 20px" th:text="${randomNumber}"></h1>
+                </span>
+            </div>
+
+            <div style="display: flex;">
+                <h3 style="display: flex; align-items: center; margin-right: 10px">Your guess:</h3>
+                <h1 style="padding-right: 20px" th:text="${roll}"></h1>
+            </div>
+
+
+            <div th:if="${resultNum == 0}"><h2 style="color: red"> Better luck next time!</h2>
+            </div>
+            <div th:if="${resultNum == 1 || resultNum == 2}">
+            <h2>Nice! you hit <span style="color: green; font-size: 36px; margin-right: 6px; margin-left: 6px" th:text="${resultNum}"></span> dice</h2>
+            </div>
+            <div th:if="${resultNum == 3}">
+                <h2>Congratulations! you hit all<span style="color: green; font-size: 36px; margin-right: 6px; margin-left: 6px" th:text="${resultNum}"></span> dice</h2>
+
+            <br>
+
+        </div>
+
+            <div th:if="${resultNum != 3}">
+                <p id="message">Game will restart in <span id="timer">3</span> seconds...</p>
+
+            </div>
+
+
+    </div>
+</div>
+
+<script>
+
+
+    let timer = 3;
+
+    function updateTimer() {
+        if (timer === 0) {
+            window.location = "/roll-dice"
+        } else if (timer > 0) {
+            document.getElementById('timer').innerHTML = timer;
+        }
+        timer--;
+    }
+
+
+    setInterval(updateTimer, 1000)
+
+
+
+</script>
+</body>
+</html>
