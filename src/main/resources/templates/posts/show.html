@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="partials/partials.html :: head ('Post')"></head>
+
+<body>
+<header th:replace="partials/partials.html :: navbar"></header>
+
+
+<h1>Show an individual post!</h1>
+
+<h3><span th:text="${post.title}"></span></h3>
+<p><span th:text="${post.description}"></span></p>
+<p><span th:text="${post.id}"></span></p>
+
+
+<script th:replace="partials/partials.html :: bootstrap-js"></script>
+</body>
+</html>

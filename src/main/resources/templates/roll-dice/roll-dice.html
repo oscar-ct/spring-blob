@@ -304,8 +304,11 @@
 
             <div th:if="${resultNum == 0}"><h2 style="color: red"> Better luck next time!</h2>
             </div>
-            <div th:if="${resultNum == 1 || resultNum == 2}">
-            <h2>Nice! you hit <span style="color: green; font-size: 36px; margin-right: 6px; margin-left: 4px" th:text="${resultNum}"></span> dice</h2>
+            <div th:if="${resultNum == 1}">
+            <h2>Nice! you hit <span style="color: green; font-size: 36px; margin-right: 6px; margin-left: 4px" th:text="${resultNum}"></span> die</h2>
+            </div>
+            <div th:if="${resultNum == 2}">
+                <h2>So close! you hit <span style="color: green; font-size: 36px; margin-right: 6px; margin-left: 4px" th:text="${resultNum}"></span> dice</h2>
             </div>
             <div th:if="${resultNum == 3}">
                 <h2>Congratulations! you hit all<span style="color: green; font-size: 36px; margin-right: 4px; margin-left: 6px" th:text="${resultNum}"></span> dice</h2>

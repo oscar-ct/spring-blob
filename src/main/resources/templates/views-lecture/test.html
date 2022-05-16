@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="partials/partials.html :: head ('testing partials')"></head>
+
 <body>
 
-<h1> test </h1>
+<header th:replace="partials/partials.html :: header"></header>
+
+<header th:replace="partials/partials.html :: navbar"></header>
+
+
+<script th:replace="partials/partials.html :: bootstrap-js"></script>
 
 </body>
+
+
 </html>
