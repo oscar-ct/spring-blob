@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/partials.html :: head ('Coffess')">
+</head>
+
+<body>
+
+    <h1>Viewing all Coffees form our Database</h1>
+
+
+<span th:each="coffee : ${coffees}">
+    <h3 th:text="${coffee.roast}"></h3>
+    <p th:text="${coffee.brand}"></p>
+    <p th:text="${coffee.origin}"></p>
+</span>
+
+
+
+</body>
+</html>

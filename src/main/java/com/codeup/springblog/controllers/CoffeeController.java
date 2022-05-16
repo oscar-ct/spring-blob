@@ -2,6 +2,7 @@ package com.codeup.springblog.controllers;
 
 
 import com.codeup.springblog.model.Coffee;
+import com.codeup.springblog.repositories.CoffeeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,27 @@ import java.util.List;
 @Controller
 public class CoffeeController {
 
-    @GetMapping("/coffee")
-    public String coffeeInfo() {
-        return "views-lecture/coffee";
+    private final CoffeeRepository coffeeDao;
+
+    public CoffeeController(CoffeeRepository coffeeDao) {
+        this.coffeeDao = coffeeDao;
     }
+
+    @GetMapping("/coffee")
+    public String allCoffees(Model model) {
+        List<Coffee> coffees = coffeeDao.findAll();
+
+        model.addAttribute("coffees", coffees);
+
+        return "coffees/index";
+    }
+
+
+
+//    @GetMapping("/coffee")
+//    public String coffeeInfo() {
+//        return "views-lecture/coffee";
+//    }
 
 //    @GetMapping("/coffee/{roast}")
 //    public String coffeeInfo(@PathVariable String roast, Model model) {
@@ -33,11 +51,11 @@ public class CoffeeController {
 //        return "views-lecture/coffee";
 //    }
 
-    @PostMapping("/coffee")
-    public String submitCoffeeNewsLetterForm(@RequestParam(name="email") String email, Model model) {
-        model.addAttribute("email", email);
-        return "views-lecture/coffee";
-    }
+//    @PostMapping("/coffee")
+//    public String submitCoffeeNewsLetterForm(@RequestParam(name="email") String email, Model model) {
+//        model.addAttribute("email", email);
+//        return "views-lecture/coffee";
+//    }
 
 //    @GetMapping("/coffee/{roast}")
 //    public String coffeeInfo(@PathVariable String roast, Model model) {
@@ -85,6 +103,27 @@ public class CoffeeController {
         return "views-lecture/coffee";
 
     }
+
+
+
+    @GetMapping("/coffee/create")
+    public String createCoffeeForm() {
+
+        return "coffees/create";
+
+    }
+
+    @PostMapping("/coffee/create")
+    public String postCoffee(@RequestParam(name = "roast") String roast, @RequestParam(name = "origin") String origin, @RequestParam(name = "brand") String brand) {
+
+        Coffee coffee = new Coffee(roast, origin, brand);
+
+       coffeeDao.save(coffee);
+
+        return "redirect:/coffee";
+
+    }
+
 
 
 }
