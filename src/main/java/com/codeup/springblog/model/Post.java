@@ -1,13 +1,20 @@
 package com.codeup.springblog.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name= "posts")
 public class Post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false, length = 150)
     private String title;
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
-//    private List<Post> posts;
+
 
     public Post(String title, String description) {
         this.title = title;
@@ -23,17 +30,6 @@ public class Post {
     public Post() {
     }
 
-//    public Post(List<Post> posts) {
-//        this.posts = posts;
-//    }
-//
-//    public List<Post> getPosts() {
-//        return posts;
-//    }
-//
-//    public void setPosts(List<Post> posts) {
-//        this.posts = posts;
-//    }
 
     public long getId() {
         return id;

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/partials.html :: head ('Posts')">
+</head>
+
+<body>
+<fieldset>
+    <legend>Add a Post</legend>
+    <form action="/post/create" method="post">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+        <input type="submit" value="submit">
+    </form>
+</fieldset>
+</body>
+</html>
