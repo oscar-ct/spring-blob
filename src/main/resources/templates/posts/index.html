@@ -11,6 +11,7 @@
     <h4>Post Number: <span th:text="${post.id}"></span></h4>
     <h3 th:text="${post.title}"></h3>
     <p th:text="${post.description}"></p>
+    <p>Posted by: <span th:text="${post.owner.getUsername()}"></span></p>
     <button class="edit-post" th:data-id="${post.id}">Edit</button>
     <form method="post" action="/posts/delete">
         <input type="hidden" th:value="${post.id}" name="deletePost">

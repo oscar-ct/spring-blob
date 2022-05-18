@@ -10,6 +10,7 @@
 
 <h3><span th:text="${post.title}"></span></h3>
 <p><span th:text="${post.description}"></span></p>
+<p>Posted by:<span th:text="${post.getOwner().getUsername()}"></span></p>
 
 <br>
 <h4>Edit Post Here</h4>
