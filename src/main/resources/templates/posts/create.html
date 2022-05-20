@@ -4,15 +4,129 @@
 </head>
 
 <body>
-<fieldset>
-    <legend>Add a Post</legend>
+<header th:replace="partials/partials.html :: navbar"></header>
+<!--<fieldset>-->
+<!--    <legend>Add a Post</legend>-->
+<!--    <form action="/post/create" method="post">-->
+<!--        <label for="title">Title:</label>-->
+<!--        <input type="text" id="title" name="title">-->
+<!--        <label for="description">Description:</label>-->
+<!--        <input type="text" id="description" name="description">-->
+<!--        <label for="awesome">Awesome status:</label>-->
+<!--        <select name="awesome" id="awesome">-->
+<!--            <option value="true">True</option>-->
+<!--            <option value="false">False</option>-->
+<!--        </select>-->
+<!--        <label for="post-history">Date:</label>-->
+<!--        <input type="date" id="post-history" name="post-history">-->
+<!--        <label for="topic">Topic Description:</label>-->
+<!--        <input type="text" id="topic" name="topic">-->
+<!--        <input type="submit" value="submit">-->
+<!--    </form>-->
+<!--</fieldset>-->
+
+
+
+<div class="container w-50 card px-3 py-5 form-bg">
+    <!--        <div th:if="${post.postImages.size() > 3}">-->
+    <h2 class="text-center">Create A Post!</h2>
     <form action="/post/create" method="post">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title">
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description">
-        <input type="submit" value="submit">
+        <div class="form-group py-1">
+            <label for="title">Title</label>
+            <input id="title" name="title" class="form-control" type="text">
+        </div>
+        <div class="form-group py-1">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" class="form-control" type="text">
+            </textarea>
+        </div>
+        <div class="form-group py-1">
+            <label for="awesome">Awesome status:</label>
+            <select name="awesome" id="awesome" class="form-select">
+                <option value="true">Very Awesome</option>
+                <option value="false">Not Awesome</option>
+            </select>
+        </div>
+        <div class="form-group py-1">
+            <input type="hidden" id="post-history" name="post-history" class="form-control" th:value="${currentDate}">
+        </div>
+        <div class="form-group py-1">
+            <label for="topic">Topic Description:</label>
+            <input type="text" id="topic" name="topic" class="form-control">
+        </div>
+        <div>Select Tags:</div>
+<!--        <label for="tags">Select Tags:</label>-->
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" value="1" name="tags">
+            <label class="btn btn-outline-primary" for="btncheck1">Silly</label>
+
+            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" value="2" name="tags">
+            <label class="btn btn-outline-primary" for="btncheck2">Funny</label>
+
+            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" value="3" name="tags">
+            <label class="btn btn-outline-primary" for="btncheck3">Humor</label>
+        </div>
+
+        <div class="form-group py-1">
+            <label for="image1">Image 1 (Title & Url)</label>
+            <input id="title1" name="title1" class="form-control" type="text" placeholder="Image Title">
+            <input id="image1" name="image1" class="form-control" type="url">
+        </div>
+        <div class="form-group py-1">
+            <label for="image2">Image 2 (Title & Url)</label>
+            <input id="title2" name="title2" class="form-control" type="text" placeholder="Image Title">
+            <input id="image2" name="image2" class="form-control" type="url">
+        </div>
+        <div class="form-group py-1">
+            <label for="image3">Image 3 (Title & Url)</label>
+            <input id="title3" name="title3" class="form-control" type="text" placeholder="Image Title">
+            <input id="image3" name="image3" class="form-control" type="url">
+        </div>
+        <div class="form-group py-1">
+            <label for="image4">Image 4 (Title & Url)</label>
+            <input id="title4" name="title4" class="form-control" type="text" placeholder="Image Title">
+            <input id="image4" name="image4" class="form-control" type="url">
+        </div>
+
+        <!--            <div th:each="postimage : ${post.postImages}" class="form-group py-1">-->
+        <!--                <label><span th:text="${postimage.imageTitle}"></span></label>-->
+        <!--                <input name="url" type="text" th:value="${postimage.imageUrl}" class="form-control">-->
+        <!--            </div>-->
+        <div class="pt-5 text-end">
+            <input type="submit" class="btn btn-block btn-primary">
+        </div>
+
     </form>
-</fieldset>
+
+
+<!--    <div th:if="${post.postImages.size() <= 3}">-->
+<!--        <form action="/posts/add" method="post">-->
+<!--            <h4 class="text-center mt-2">Add an additional image here</h4>-->
+<!--            <div class="form-group py-1">-->
+<!--                <label for="add-image">New image title</label>-->
+<!--                <input id="add-image-title" name="title-add" class="form-control" type="text">-->
+<!--                <label for="add-image-title">New image url</label>-->
+<!--                <input id="add-image" name="image-add" class="form-control" type="url">-->
+<!--                <input name="id" type="hidden" th:value="${post.id}">-->
+<!--                <div class="pt-5 text-end">-->
+<!--                    <input type="submit" class="btn btn-block btn-primary">-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+            <!--            <div class="d-flex justify-content-between">-->
+            <!--                <div class="pt-4 text-start">-->
+            <!--                    <a href="/profile">Return to Profile</a>-->
+            <!--                </div>-->
+
+            <!--            </div>-->
+
+
+
+<!--        </form>-->
+    </div>
+
+
+
 </body>
 </html>
