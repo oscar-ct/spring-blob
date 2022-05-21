@@ -5,10 +5,7 @@ import com.codeup.springblog.model.*;
 import com.codeup.springblog.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -78,7 +75,12 @@ public class PostController {
     @GetMapping("/post/create")
     public String createPostForm(Model model) {
         LocalDate today = LocalDate.now();
+
+
         model.addAttribute("currentDate", today);
+        model.addAttribute("post", new Post());
+
+
         return "posts/create";
     }
 
@@ -122,6 +124,12 @@ public class PostController {
 //    public String updatePost(@RequestParam(name = "title") String title, @RequestParam(name = "description") String description, @RequestParam(name = "id") long id) {
 //        Post post = new Post(id, title, description);
 //        postDao.save(post);
+//        return "redirect:/posts";
+//    }
+
+//    @PostMapping("/posts/delete")
+//    public String updatePost(@RequestParam(name = "deletePost") long id) {
+//        postDao.deleteById(id);
 //        return "redirect:/posts";
 //    }
 
@@ -272,52 +280,71 @@ public class PostController {
 
 
 
+//    @PostMapping("/post/create")
+//    public String createPost(
+//            @RequestParam(name = "title") String title,
+//            @RequestParam(name = "description") String description,
+//            @RequestParam(name = "awesome") boolean awesome,
+//            @RequestParam(name = "post-history") String postHistory,
+//            @RequestParam(name = "topic") String topic,
+//            @RequestParam(name = "tags")List<Tag> tags,
+//            @RequestParam(required = false, name = "title1", defaultValue = "null") String title1,
+//            @RequestParam(required = false, name = "image1", defaultValue = "null") String image1,
+//            @RequestParam(required = false, name = "title2", defaultValue = "null") String title2,
+//            @RequestParam(required = false, name = "image2", defaultValue = "null") String image2,
+//            @RequestParam(required = false, name = "title3", defaultValue = "null") String title3,
+//            @RequestParam(required = false, name = "image3", defaultValue = "null") String image3,
+//            @RequestParam(required = false, name = "title4", defaultValue = "null") String title4,
+//            @RequestParam(required = false, name = "image4", defaultValue = "null") String image4)
+//             {
+//
+//
+//        User user = userDao.getById(1L);
+//        Post post = new Post();
+//        PostDetails postDetails = new PostDetails(awesome, postHistory, topic);
+//        post.setPostDetails(postDetails);
+//        post.setTitle(title);
+//        post.setDescription(description);
+//        post.setOwner(user);
+//        post.setPostTags(tags);
+////        System.out.println(tags);
+//
+//        if (!title1.equals("null")){
+//            PostImage postImage = new PostImage(title1, image1, post);
+//            post.getPostImages().add(postImage);
+//        }
+//        if (!title2.equals("null")) {
+//            PostImage postImage1 = new PostImage(title2, image2, post);
+//            post.getPostImages().add(postImage1);
+//        }
+//        if (!title3.equals("null")) {
+//            PostImage postImage2 = new PostImage(title3, image3, post);
+//            post.getPostImages().add(postImage2);
+//        }
+//        if (!title4.equals("null")) {
+//            PostImage postImage3 = new PostImage(title4, image4, post);
+//            post.getPostImages().add(postImage3);
+//        }
+//
+//
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
+
     @PostMapping("/post/create")
-    public String createPost(
-            @RequestParam(name = "title") String title,
-            @RequestParam(name = "description") String description,
-            @RequestParam(name = "awesome") boolean awesome,
-            @RequestParam(name = "post-history") String postHistory,
-            @RequestParam(name = "topic") String topic,
-            @RequestParam(name = "tags")List<Tag> tags,
-            @RequestParam(required = false, name = "title1", defaultValue = "null") String title1,
-            @RequestParam(required = false, name = "image1", defaultValue = "null") String image1,
-            @RequestParam(required = false, name = "title2", defaultValue = "null") String title2,
-            @RequestParam(required = false, name = "image2", defaultValue = "null") String image2,
-            @RequestParam(required = false, name = "title3", defaultValue = "null") String title3,
-            @RequestParam(required = false, name = "image3", defaultValue = "null") String image3,
-            @RequestParam(required = false, name = "title4", defaultValue = "null") String title4,
-            @RequestParam(required = false, name = "image4", defaultValue = "null") String image4)
-             {
-
-
+    public String createPost(@ModelAttribute Post post,
+                             @RequestParam(name = "post-history") String postHistory) {
 
         User user = userDao.getById(1L);
-        Post post = new Post();
-        PostDetails postDetails = new PostDetails(awesome, postHistory, topic);
-        post.setPostDetails(postDetails);
-        post.setTitle(title);
-        post.setDescription(description);
         post.setOwner(user);
-        post.setPostTags(tags);
-//        System.out.println(tags);
 
-        if (!title1.equals("null")){
-            PostImage postImage = new PostImage(title1, image1, post);
-            post.getPostImages().add(postImage);
-        }
-        if (!title2.equals("null")) {
-            PostImage postImage1 = new PostImage(title2, image2, post);
-            post.getPostImages().add(postImage1);
-        }
-        if (!title3.equals("null")) {
-            PostImage postImage2 = new PostImage(title3, image3, post);
-            post.getPostImages().add(postImage2);
-        }
-        if (!title4.equals("null")) {
-            PostImage postImage3 = new PostImage(title4, image4, post);
-            post.getPostImages().add(postImage3);
-        }
+        PostImage postImage = new PostImage(post.getPostImages().get(0).getImageTitle(), post.getPostImages().get(0).getImageUrl(), post);
+
+        PostImage postImage1 = new PostImage(post.getPostImages().get(1).getImageTitle(), post.getPostImages().get(1).getImageUrl(), post);
+
+        post.getPostDetails().setHistoryOfPost(postHistory);
+        post.getPostImages().add(postImage);
+        post.getPostImages().add(postImage1);
 
 
         postDao.save(post);

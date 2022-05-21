@@ -39,10 +39,12 @@
                     </div>
                     <div class="d-flex flex-column w-50 mt-5 justify-content-around align-items-center">
                         <button style="width: 50px" class="edit-post" th:data-id="${post.id}">Edit</button>
+
                         <form method="post" action="/posts/delete">
                             <input type="hidden" th:value="${post.id}" name="deletePost">
                             <button onclick="return confirm('Are you sure you want to delete this post?');">Delete</button>
                         </form>
+
                     </div>
 
                 </div>

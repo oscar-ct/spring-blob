@@ -91,7 +91,7 @@
 
                     <div class="w-100 d-flex">
                         <div class="w-50">
-                            <input form="editPost" id="title2" name="title2" class="form-control" type="text" th:value="${post.postImages[1].imageTitle}">
+                            <input form="editPost" id="title2" name="title[]" class="form-control" type="text" th:value="${post.postImages[1].imageTitle}">
                         </div>
                         <div class="w-50 text-end">
                             <input form="imgDelete2" name="img1" type="hidden" th:value="${post.postImages[1].id}">

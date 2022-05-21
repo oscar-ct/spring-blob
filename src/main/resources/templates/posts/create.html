@@ -28,22 +28,22 @@
 
 
 <div class="container w-50 card px-3 py-5 form-bg">
-    <!--        <div th:if="${post.postImages.size() > 3}">-->
+
     <h2 class="text-center">Create A Post!</h2>
-    <form action="/post/create" method="post">
+    <form action="/post/create" method="post" th:object="${post}">
         <div class="form-group py-1">
             <label for="title">Title</label>
-            <input id="title" name="title" class="form-control" type="text">
+            <input id="title" th:field="*{title}" class="form-control" type="text">
         </div>
         <div class="form-group py-1">
             <label for="description">Description</label>
-            <textarea id="description" name="description" class="form-control" type="text">
+            <textarea id="description" th:field="*{description}" class="form-control" type="text">
             </textarea>
         </div>
         <div class="form-group py-1">
             <label for="awesome">Awesome status:</label>
-            <select name="awesome" id="awesome" class="form-select">
-                <option value="true">Very Awesome</option>
+            <select th:field="*{postDetails.awesome}" id="awesome" class="form-select">
+                <option value="true" selected >Very Awesome</option>
                 <option value="false">Not Awesome</option>
             </select>
         </div>
@@ -52,46 +52,54 @@
         </div>
         <div class="form-group py-1">
             <label for="topic">Topic Description:</label>
-            <input type="text" id="topic" name="topic" class="form-control">
+            <input type="text" id="topic" th:field="*{postDetails.topicDescription}" class="form-control">
         </div>
+
         <div>Select Tags:</div>
-<!--        <label for="tags">Select Tags:</label>-->
-        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" value="1" name="tags">
-            <label class="btn btn-outline-primary" for="btncheck1">Silly</label>
-
-            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" value="2" name="tags">
-            <label class="btn btn-outline-primary" for="btncheck2">Funny</label>
-
-            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" value="3" name="tags">
-            <label class="btn btn-outline-primary" for="btncheck3">Humor</label>
+        <div class="w-100 d-flex">
+            <div class="w-25">
+                <input type="checkbox" id="silly" th:field="*{postTags}" value="1">
+                <label for="silly">Silly</label><br>
+                <input type="checkbox" id="funny" th:field="*{postTags}" value="2">
+                <label for="funny">Funny</label><br>
+            </div>
+            <div class="w-25">
+<!--                <input type="checkbox" id="" th:field="*{postTags}" value="1">-->
+<!--                <label for="silly">Silly</label><br>-->
+                <input type="checkbox" id="humor" th:field="*{postTags}" value="3">
+                <label for="humor">Humor</label><br>
+            </div>
         </div>
 
-        <div class="form-group py-1">
-            <label for="image1">Image 1 (Title & Url)</label>
-            <input id="title1" name="title1" class="form-control" type="text" placeholder="Image Title">
-            <input id="image1" name="image1" class="form-control" type="url">
-        </div>
-        <div class="form-group py-1">
-            <label for="image2">Image 2 (Title & Url)</label>
-            <input id="title2" name="title2" class="form-control" type="text" placeholder="Image Title">
-            <input id="image2" name="image2" class="form-control" type="url">
-        </div>
-        <div class="form-group py-1">
-            <label for="image3">Image 3 (Title & Url)</label>
-            <input id="title3" name="title3" class="form-control" type="text" placeholder="Image Title">
-            <input id="image3" name="image3" class="form-control" type="url">
-        </div>
-        <div class="form-group py-1">
-            <label for="image4">Image 4 (Title & Url)</label>
-            <input id="title4" name="title4" class="form-control" type="text" placeholder="Image Title">
-            <input id="image4" name="image4" class="form-control" type="url">
-        </div>
 
-        <!--            <div th:each="postimage : ${post.postImages}" class="form-group py-1">-->
-        <!--                <label><span th:text="${postimage.imageTitle}"></span></label>-->
-        <!--                <input name="url" type="text" th:value="${postimage.imageUrl}" class="form-control">-->
-        <!--            </div>-->
+<!--        </div>-->
+
+        <div class="form-group py-1">
+            <label for="image1">Image 1   (*Optional)</label>
+            <input id="title1" th:field="*{postImages[0].imageTitle}" class="form-control" type="text" placeholder="Image Title">
+            <input id="image1" th:field="*{postImages[0].imageUrl}" class="form-control" type="url" placeholder="Image Url">
+        </div>
+        <div class="form-group py-1">
+            <label for="image2">Image 2   (*Optional)</label>
+            <input id="title2" th:field="*{postImages[1].imageTitle}" class="form-control" type="text" placeholder="Image Title">
+            <input id="image2" th:field="*{postImages[1].imageUrl}" class="form-control" type="url" placeholder="Image Url">
+        </div>
+<!--        <div class="form-group py-1">-->
+<!--            <label for="image3">Image 3   (*Optional)</label>-->
+<!--            <input id="title3" th:field="*{postImages[2].imageTitle}" class="form-control" type="text" placeholder="Image Title">-->
+<!--            <input id="image3" th:field="*{postImages[2].imageUrl}" class="form-control" type="url" placeholder="Image Url">-->
+<!--        </div>-->
+<!--        <div class="form-group py-1">-->
+<!--            <label for="image4">Image 4   (*Optional)</label>-->
+<!--            <input id="title4" th:field="*{postImages[3].imageTitle}" class="form-control" type="text" placeholder="Image Title">-->
+<!--            <input id="image4" th:field="*{postImages[3].imageUrl}" class="form-control" type="url" placeholder="Image Url">-->
+<!--        </div>-->
+
+<!--                    <div th:each="postimage : ${post.postImages}" class="form-group py-1">-->
+<!--                        <label><span th:text="${postimage.imageTitle}"></span></label>-->
+<!--                        <input name="url" type="text" th:value="${postimage.imageUrl}" class="form-control">-->
+<!--                    </div>-->
+
         <div class="pt-5 text-end">
             <input type="submit" class="btn btn-block btn-primary">
         </div>
