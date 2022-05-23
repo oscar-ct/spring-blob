@@ -51,7 +51,7 @@
     <form id="imgDelete2" action="/posts/delete/img" method="post"></form>
     <form id="imgDelete3" action="/posts/delete/img" method="post"></form>
     <form id="imgDelete4" action="/posts/delete/img" method="post"></form>
-    <form id="editPost" action="/posts/edit" method="post"></form>
+    <form id="editPost" action="/posts/edit" method="post" th:object="${post}"></form>
     <div class="container w-50 card px-3 py-5 form-bg">
 <!--        <div th:if="${post.postImages.size() > 3}">-->
             <h2 class="text-center">Edit Post</h2>
@@ -59,12 +59,12 @@
 <!--            <form action="/posts/edit" method="post">-->
                 <div class="form-group py-1">
                     <label for="title">Title</label>
-                    <input form="editPost" id="title" name="post-title" class="form-control" type="text" th:value="${post.title}">
-                    <input form="editPost" name="id" type="hidden" th:value="${post.id}">
+                    <input form="editPost" id="title" name="post-title" class="form-control" type="text" th:field="*{post.title}">
+                    <input form="editPost" name="id" type="hidden" th:field="*{post.id}">
                 </div>
                 <div class="form-group py-1">
                     <label for="description">Description</label>
-                    <input form="editPost" style="height:100px;" id="description" name="description" class="form-control" th:value="${post.description}" type="text">
+                    <input form="editPost" style="height:100px;" id="description" name="description" class="form-control" th:field="*{post.description}" type="text">
                 </div>
 
                 <div class="form-group py-1" th:if="${post.postImages.size() > 0}">
@@ -72,7 +72,7 @@
 
                     <div class="w-100 d-flex">
                         <div class="w-50">
-                            <input form="editPost" id="title1" name="title1" class="form-control" type="text" th:value="${post.postImages[0].imageTitle}">
+                            <input form="editPost" id="title1" name="title1" class="form-control" type="text" th:field="*{post.postImages[0].imageTitle}">
                         </div>
                         <div class="w-50 text-end">
                                 <input form="imgDelete" name="img" type="hidden" th:value="${post.postImages[0].id}">
@@ -80,8 +80,8 @@
                         </div>
                     </div>
 
-                    <input form="editPost" name="id1" type="hidden" th:value="${post.postImages[0].id}">
-                    <input form="editPost" id="image1" name="image1" class="form-control" type="url" th:value="${post.postImages[0].imageUrl}">
+                    <input form="editPost" name="id1" type="hidden" th:field="*{post.postImages[0].id}">
+                    <input form="editPost" id="image1" name="image1" class="form-control" type="url" th:field="*{post.postImages[0].imageUrl}">
                 </div>
 
 
@@ -91,7 +91,7 @@
 
                     <div class="w-100 d-flex">
                         <div class="w-50">
-                            <input form="editPost" id="title2" name="title2" class="form-control" type="text" th:value="${post.postImages[1].imageTitle}">
+                            <input form="editPost" id="title2" name="title[]" class="form-control" type="text" th:field="*{post.postImages[1].imageTitle}">
                         </div>
                         <div class="w-50 text-end">
                             <input form="imgDelete2" name="img1" type="hidden" th:value="${post.postImages[1].id}">
@@ -101,8 +101,8 @@
 
 
 <!--                    <input form="editPost" id="title2" name="title2" class="form-control" type="text" th:value="${post.postImages[1].imageTitle}">-->
-                    <input form="editPost" name="id2" type="hidden" th:value="${post.postImages[1].id}">
-                    <input form="editPost" id="image2" name="image2" class="form-control" type="url" th:value="${post.postImages[1].imageUrl}">
+                    <input form="editPost" name="id2" type="hidden" th:field="*{post.postImages[1].id}">
+                    <input form="editPost" id="image2" name="image2" class="form-control" type="url" th:field="*{post.postImages[1].imageUrl}">
                 </div>
 
 
@@ -111,7 +111,7 @@
 
                     <div class="w-100 d-flex">
                         <div class="w-50">
-                            <input form="editPost" id="title3" name="title3" class="form-control" type="text" th:value="${post.postImages[2].imageTitle}">
+                            <input form="editPost" id="title3" name="title3" class="form-control" type="text" th:field="*{post.postImages[2].imageTitle}">
                         </div>
                         <div class="w-50 text-end">
                             <input form="imgDelete3" name="img1" type="hidden" th:value="${post.postImages[2].id}">
@@ -121,8 +121,8 @@
 
 
                     <!--                    <input form="editPost" id="title3" name="title3" class="form-control" type="text" th:value="${post.postImages[2].imageTitle}">-->
-                    <input form="editPost" name="id3" type="hidden" th:value="${post.postImages[2].id}">
-                    <input form="editPost" id="image3" name="image3" class="form-control" type="url" th:value="${post.postImages[2].imageUrl}">
+                    <input form="editPost" name="id3" type="hidden" th:field="*{post.postImages[2].id}">
+                    <input form="editPost" id="image3" name="image3" class="form-control" type="url" th:field="*{post.postImages[2].imageUrl}">
                 </div>
                 <div class="form-group py-1" th:if="${post.postImages.size() > 3}">
                     <label for="image4">Image 4 (Title & Url)</label>
@@ -130,7 +130,7 @@
 
                     <div class="w-100 d-flex">
                         <div class="w-50">
-                            <input form="editPost" id="title4" name="title4" class="form-control" type="text" th:value="${post.postImages[3].imageTitle}">
+                            <input form="editPost" id="title4" name="title4" class="form-control" type="text" th:field="*{post.postImages[3].imageTitle}">
                         </div>
                         <div class="w-50 text-end">
                             <input form="imgDelete4" name="img1" type="hidden" th:value="${post.postImages[3].id}">
@@ -140,8 +140,8 @@
 
 
 <!--                    <input form="editPost" id="title4" name="title4" class="form-control" type="text" th:value="${post.postImages[3].imageTitle}">-->
-                    <input form="editPost" name="id4" type="hidden" th:value="${post.postImages[3].id}">
-                    <input  form="editPost" id="image4" name="image4" class="form-control" type="url" th:value="${post.postImages[3].imageUrl}">
+                    <input form="editPost" name="id4" type="hidden" th:field="*{post.postImages[3].id}">
+                    <input  form="editPost" id="image4" name="image4" class="form-control" type="url" th:field="*{post.postImages[3].imageUrl}">
                 </div>
                                                             <!--REFACTOR LIKE THIS SOMEDAY-->
     <!--            <div th:each="postimage : ${post.postImages}" class="form-group py-1">-->

@@ -1,9 +1,10 @@
 package com.codeup.springblog.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name= "users")
+@Table(name= "users", uniqueConstraints = @UniqueConstraint(columnNames = {"username", "email"}))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +15,18 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+//    private List<Post> posts;
+
+
+
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+//        posts = copy.posts;
+    }
 
 
     public User(long id, String username, String email, String password) {
