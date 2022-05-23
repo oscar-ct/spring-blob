@@ -3,6 +3,8 @@ package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.model.*;
 import com.codeup.springblog.repositories.*;
+import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +23,15 @@ public class PostController {
     private final PostDetailsRepository postDetailsDao;
     private final PostImagesRepository postImagesDao;
     private final PostTagRepository postTagDao;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao, PostDetailsRepository postDetailsDao, PostImagesRepository postImagesDao, PostTagRepository postTagDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, PostDetailsRepository postDetailsDao, PostImagesRepository postImagesDao, PostTagRepository postTagDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
         this.postDetailsDao = postDetailsDao;
         this.postImagesDao = postImagesDao;
         this.postTagDao = postTagDao;
+        this.emailService = emailService;
     }
 
 
@@ -81,6 +85,8 @@ public class PostController {
         model.addAttribute("post", new Post());
 
 
+
+
         return "posts/create";
     }
 
@@ -114,7 +120,7 @@ public class PostController {
         return "posts/index";
     }
 
-    @GetMapping("/posts/{id}")
+    @GetMapping("/posts/{id}/edit")
     public String postById(@PathVariable long id, Model model) {
         model.addAttribute("post", postDao.getById(id));
         return "posts/show";
@@ -182,95 +188,81 @@ public class PostController {
     }
 
 
-
-    @PostMapping("/posts/edit")
-    public String editPost4(
-        @RequestParam(name = "id") long id,
-        @RequestParam(name = "post-title") String postTitle,
-        @RequestParam(name = "description") String postDescription,
-        @RequestParam(required = false, name = "id1", defaultValue = "0") long id1,
-        @RequestParam(required = false, name = "title1", defaultValue = "0") String title1,
-        @RequestParam(required = false, name = "image1", defaultValue = "0") String image1,
-        @RequestParam(required = false, name = "id2", defaultValue = "0") long id2,
-        @RequestParam(required = false, name = "title2", defaultValue = "0") String title2,
-        @RequestParam(required = false, name = "image2", defaultValue = "0") String image2,
-        @RequestParam(required = false, name = "id3", defaultValue = "0") long id3,
-        @RequestParam(required = false, name = "title3", defaultValue = "0") String title3,
-        @RequestParam(required = false, name = "image3", defaultValue = "0") String image3,
-        @RequestParam(required = false, name = "id4", defaultValue = "0") long id4,
-        @RequestParam(required = false, name = "title4", defaultValue = "0") String title4,
-        @RequestParam(required = false, name = "image4", defaultValue = "0") String image4)  {
-
-        Post post = postDao.getById(id);
-        post.setTitle(postTitle);
-        post.setDescription(postDescription);
-        postDao.save(post);
-        if (id1 != 0) {
-            PostImage postImage1 = postImagesDao.getById(id1);
-            postImage1.setImageTitle(title1);
-            postImage1.setImageUrl(image1);
-            postImagesDao.save(postImage1);
-        }
-        if (id2 != 0) {
-            PostImage postImage2 = postImagesDao.getById(id2);
-            postImage2.setImageTitle(title2);
-            postImage2.setImageUrl(image2);
-            postImagesDao.save(postImage2);
-        }
-        if (id3 != 0) {
-            PostImage postImage3 = postImagesDao.getById(id3);
-            postImage3.setImageTitle(title3);
-            postImage3.setImageUrl(image3);
-            postImagesDao.save(postImage3);
-        }
-        if (id4 != 0) {
-            PostImage postImage4 = postImagesDao.getById(id4);
-            postImage4.setImageTitle(title4);
-            postImage4.setImageUrl(image4);
-            postImagesDao.save(postImage4);
-        }
-//        postImagesDao.save(postImages);
-        return "redirect:/posts";
-    }
-
-//    @PostMapping("/posts/edit3")
-//    public String editPost3(
-//            @RequestParam(name = "id") long id,
-//            @RequestParam(name = "post-title") String postTitle,
-//            @RequestParam(name = "description") String postDescription,
-//            @RequestParam(name = "id1") long id1,
-//            @RequestParam(name = "title1") String title1,
-//            @RequestParam(name = "image1") String image1,
-//            @RequestParam(name = "id2") long id2,
-//            @RequestParam(name = "title2") String title2,
-//            @RequestParam(name = "image2") String image2,
-//            @RequestParam(name = "id3") long id3,
-//            @RequestParam(name = "title3") String title3,
-//            @RequestParam(name = "image3") String image3) {
+//
+//    @PostMapping("/posts/edit")
+//    public String editPost4(
+//        @RequestParam(name = "id") long id,
+//        @RequestParam(name = "post-title") String postTitle,
+//        @RequestParam(name = "description") String postDescription,
+//        @RequestParam(required = false, name = "id1", defaultValue = "0") long id1,
+//        @RequestParam(required = false, name = "title1", defaultValue = "0") String title1,
+//        @RequestParam(required = false, name = "image1", defaultValue = "0") String image1,
+//        @RequestParam(required = false, name = "id2", defaultValue = "0") long id2,
+//        @RequestParam(required = false, name = "title2", defaultValue = "0") String title2,
+//        @RequestParam(required = false, name = "image2", defaultValue = "0") String image2,
+//        @RequestParam(required = false, name = "id3", defaultValue = "0") long id3,
+//        @RequestParam(required = false, name = "title3", defaultValue = "0") String title3,
+//        @RequestParam(required = false, name = "image3", defaultValue = "0") String image3,
+//        @RequestParam(required = false, name = "id4", defaultValue = "0") long id4,
+//        @RequestParam(required = false, name = "title4", defaultValue = "0") String title4,
+//        @RequestParam(required = false, name = "image4", defaultValue = "0") String image4)  {
 //
 //        Post post = postDao.getById(id);
 //        post.setTitle(postTitle);
 //        post.setDescription(postDescription);
 //        postDao.save(post);
-//
-//        PostImage postImage1 = postImagesDao.getById(id1);
-//        postImage1.setImageTitle(title1);
-//        postImage1.setImageUrl(image1);
-//        postImagesDao.save(postImage1);
-//
-//        PostImage postImage2 = postImagesDao.getById(id2);
-//        postImage2.setImageTitle(title2);
-//        postImage2.setImageUrl(image2);
-//        postImagesDao.save(postImage2);
-//
-//        PostImage postImage3 = postImagesDao.getById(id3);
-//        postImage3.setImageTitle(title3);
-//        postImage3.setImageUrl(image3);
-//        postImagesDao.save(postImage3);
-//
+//        if (id1 != 0) {
+//            PostImage postImage1 = postImagesDao.getById(id1);
+//            postImage1.setImageTitle(title1);
+//            postImage1.setImageUrl(image1);
+//            postImagesDao.save(postImage1);
+//        }
+//        if (id2 != 0) {
+//            PostImage postImage2 = postImagesDao.getById(id2);
+//            postImage2.setImageTitle(title2);
+//            postImage2.setImageUrl(image2);
+//            postImagesDao.save(postImage2);
+//        }
+//        if (id3 != 0) {
+//            PostImage postImage3 = postImagesDao.getById(id3);
+//            postImage3.setImageTitle(title3);
+//            postImage3.setImageUrl(image3);
+//            postImagesDao.save(postImage3);
+//        }
+//        if (id4 != 0) {
+//            PostImage postImage4 = postImagesDao.getById(id4);
+//            postImage4.setImageTitle(title4);
+//            postImage4.setImageUrl(image4);
+//            postImagesDao.save(postImage4);
+//        }
 ////        postImagesDao.save(postImages);
 //        return "redirect:/posts";
 //    }
+
+    @PostMapping("/posts/edit")
+    public String editPost4(@ModelAttribute Post post)  {
+        Post existingPost = postDao.getById(post.getId());
+        existingPost.setTitle(post.getTitle());
+        existingPost.setDescription(post.getDescription());
+
+        existingPost.getPostImages().get(0).setImageTitle(post.getPostImages().get(0).getImageTitle());
+        existingPost.getPostImages().get(0).setImageUrl(post.getPostImages().get(0).getImageUrl());
+
+        existingPost.getPostImages().get(1).setImageTitle(post.getPostImages().get(1).getImageTitle());
+        existingPost.getPostImages().get(1).setImageUrl(post.getPostImages().get(1).getImageUrl());
+
+        existingPost.getPostImages().get(2).setImageTitle(post.getPostImages().get(2).getImageTitle());
+        existingPost.getPostImages().get(2).setImageUrl(post.getPostImages().get(2).getImageUrl());
+
+        existingPost.getPostImages().get(3).setImageTitle(post.getPostImages().get(3).getImageTitle());
+        existingPost.getPostImages().get(3).setImageUrl(post.getPostImages().get(3).getImageUrl());
+
+
+        postDao.save(existingPost);
+        return "redirect:/posts";
+    }
+
+
 
     public static void main(String[] args) {
         LocalDate today = LocalDate.now();
@@ -335,7 +327,8 @@ public class PostController {
     public String createPost(@ModelAttribute Post post,
                              @RequestParam(name = "post-history") String postHistory) {
 
-        User user = userDao.getById(1L);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = userDao.getById(2L);
         post.setOwner(user);
 
         PostImage postImage = new PostImage(post.getPostImages().get(0).getImageTitle(), post.getPostImages().get(0).getImageUrl(), post);
@@ -348,6 +341,9 @@ public class PostController {
 
 
         postDao.save(post);
+
+        emailService.prepareAndSend(post, post.getTitle(), post.getDescription());
+
         return "redirect:/posts";
     }
 

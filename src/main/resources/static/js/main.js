@@ -5,5 +5,5 @@
 
 $(".edit-post").on("click", function () {
     let postId = $(this).attr("data-id")
-    window.location = "/posts/" + postId
+    window.location = "/posts/" + postId + "/edit"
 });
