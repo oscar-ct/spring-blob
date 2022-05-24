@@ -140,8 +140,8 @@ public class PostController {
 //    }
 
     @PostMapping("/posts/delete")
-    public String updatePost(@RequestParam(name = "deletePost") long id) {
-        postDao.deleteById(id);
+    public String updatePost(@ModelAttribute Post post) {
+        postDao.deleteById(post.getId());
         return "redirect:/posts";
     }
 
@@ -330,19 +330,26 @@ public class PostController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        User user = userDao.getById(2L);
         post.setOwner(user);
+        post.getPostDetails().setHistoryOfPost(postHistory);
+
 
         PostImage postImage = new PostImage(post.getPostImages().get(0).getImageTitle(), post.getPostImages().get(0).getImageUrl(), post);
+//        PostImage postImage = new PostImage(post);
+
+
 
         PostImage postImage1 = new PostImage(post.getPostImages().get(1).getImageTitle(), post.getPostImages().get(1).getImageUrl(), post);
+//        PostImage postImage1 = new PostImage(post);
 
-        post.getPostDetails().setHistoryOfPost(postHistory);
+
         post.getPostImages().add(postImage);
         post.getPostImages().add(postImage1);
 
 
         postDao.save(post);
 
-        emailService.prepareAndSend(post, post.getTitle(), post.getDescription());
+
+//        emailService.prepareAndSend(post, post.getTitle(), post.getDescription());
 
         return "redirect:/posts";
     }
