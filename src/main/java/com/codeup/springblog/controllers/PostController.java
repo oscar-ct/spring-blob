@@ -334,16 +334,17 @@ public class PostController {
 
 
         PostImage postImage = new PostImage(post.getPostImages().get(0).getImageTitle(), post.getPostImages().get(0).getImageUrl(), post);
-//        PostImage postImage = new PostImage(post);
-
 
 
         PostImage postImage1 = new PostImage(post.getPostImages().get(1).getImageTitle(), post.getPostImages().get(1).getImageUrl(), post);
-//        PostImage postImage1 = new PostImage(post);
 
 
-        post.getPostImages().add(postImage);
-        post.getPostImages().add(postImage1);
+        List<PostImage> postImages3 = new ArrayList<>();
+        postImages3.add(postImage);
+        postImages3.add(postImage1);
+
+        post.setPostImages(postImages3);
+
 
 
         postDao.save(post);

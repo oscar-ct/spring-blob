@@ -65,6 +65,12 @@ public class Post {
     public Post() {
     }
 
+    public Post(String title, String description, User owner) {
+        this.title = title;
+        this.description = description;
+        this.owner = owner;
+    }
+
     public List<PostImage> getPostImages() {
         return postImages;
     }
