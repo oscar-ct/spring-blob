@@ -120,6 +120,25 @@ public class PostController {
         return "posts/index";
     }
 
+
+    @GetMapping("/posts?search={string}")
+    public String searchPosts(@PathVariable String string, Model model) {
+            model.addAttribute("posts", postDao.findByTitle(string));
+        System.out.println(string);
+        return "posts/index";
+    }
+
+
+
+
+
+//    @GetMapping("/posts/")
+//    public String posts(@RequestParam() String item, Model model) {
+//        model.addAttribute("posts", postDao.findAll());
+//        return "posts/index";
+//    }
+
+
     @GetMapping("/posts/{id}/edit")
     public String postById(@PathVariable long id, Model model) {
         model.addAttribute("post", postDao.getById(id));
@@ -240,7 +259,7 @@ public class PostController {
 //    }
 
     @PostMapping("/posts/edit")
-    public String editPost4(@ModelAttribute Post post)  {
+    public String editPost4(@ModelAttribute Post post, @RequestParam(name = "postImages[2].imageUrl") String string)  {
         Post existingPost = postDao.getById(post.getId());
         existingPost.setTitle(post.getTitle());
         existingPost.setDescription(post.getDescription());
@@ -252,7 +271,13 @@ public class PostController {
         existingPost.getPostImages().get(1).setImageUrl(post.getPostImages().get(1).getImageUrl());
 
         existingPost.getPostImages().get(2).setImageTitle(post.getPostImages().get(2).getImageTitle());
-        existingPost.getPostImages().get(2).setImageUrl(post.getPostImages().get(2).getImageUrl());
+//        if (string == null) {
+//            existingPost.getPostImages().get(2).setImageUrl(post.getPostImages().get(2).getImageUrl());
+//        }
+//        if (string != null) {
+            existingPost.getPostImages().get(2).setImageUrl(string);
+//        }
+
 
         existingPost.getPostImages().get(3).setImageTitle(post.getPostImages().get(3).getImageTitle());
         existingPost.getPostImages().get(3).setImageUrl(post.getPostImages().get(3).getImageUrl());
@@ -342,8 +367,11 @@ public class PostController {
 //        PostImage postImage1 = new PostImage(post);
 
 
-        post.getPostImages().add(postImage);
-        post.getPostImages().add(postImage1);
+        List<PostImage> postImages3 = new ArrayList<>();
+        postImages3.add(postImage);
+        postImages3.add(postImage1);
+
+        post.setPostImages(postImages3);
 
 
         postDao.save(post);

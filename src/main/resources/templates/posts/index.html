@@ -5,18 +5,32 @@
 <head th:replace="partials/partials.html :: head ('Posts')"></head>
 <body>
 <header th:replace="partials/partials.html :: navbar"></header>
+<!--<button  style="width: 50px; height: 25px" class="btn btn-danger" id="upload">Hi</button>-->
+<!--<span id="picture"></span>-->
+
+<!--<div class="d-flex justify-content-center pt-4 pb-4">-->
+<!--    <form class="input-group w-75" method="get" action="/posts">-->
+<!--        <input type="search" class="form-control rounded" placeholder="Search ads" aria-label="Search" aria-describedby="search-addon" name="search" />-->
+<!--        <button type="submit" class="btn btn-outline-dark">Search</button>-->
+<!--    </form>-->
+<!--</div>-->
 
 
 
-<div class="container mt-5 mb-3 text-center">
-    <h6><a href="/posts" style="color: blue; text-decoration-line: underline;">Return to Posts</a></h6>
-</div>
+
+<!--<div class="container mt-5 mb-3 text-center">-->
+<!--    <h6><a href="/posts" style="color: blue; text-decoration-line: underline;">Return to Posts</a></h6>-->
+<!--</div>-->
 <div sec:authorize="isAuthenticated()">
     This content is only shown to authenticated users.
 
     User ID: <span th:text="${#authentication.principal.id}"></span>
     Username: <span th:text="${#authentication.principal.username}"></span>
     Email: <span th:text="${#authentication.principal.email}"></span>
+
+</div>
+
+
 <!--</div>-->
 <div class="w-100 d-flex flex-wrap">
     <div class=" mt-0 container d-flex flex-wrap justify-content-around px-0 w-50" th:each="post : ${posts}">
@@ -47,6 +61,7 @@
                     </div>
                     <div class="d-flex flex-column w-50 mt-5 justify-content-around align-items-center">
                         <button style="width: 50px" class="edit-post" th:data-id="${post.id}">Edit</button>
+<!--                        <button class="upload-picture">Upload Picture</button>-->
 
 <!--                        <form method="post" action="/posts/delete">-->
 <!--                            <input type="hidden" th:value="${post.id}" name="deletePost">-->
@@ -96,10 +111,10 @@
 
 
 
-<script th:replace="partials/partials.html :: bootstrap-js"></script>
-<script th:replace="partials/partials.html :: jquery"></script>
-<script th:replace="partials/partials.html :: mainjs"></script>
+<!--<script th:replace="partials/partials.html :: bootstrap-js"></script>-->
+<!--<script th:replace="partials/partials.html :: jquery"></script>-->
+<!--<script th:replace="partials/partials.html :: mainjs"></script>-->
 
-<!--<div th:replace="partials/partials.html :: mainfooter"></div>-->
+<div th:replace="partials/partials.html :: mainfooter"></div>
 </body>
 </html>

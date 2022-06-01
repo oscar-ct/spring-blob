@@ -117,6 +117,8 @@
                         </div>
                         <div class="w-50 text-end">
                             <input form="imgDelete3" name="img1" type="hidden" th:value="${post.postImages[2].id}">
+
+                            <button class="upload-picture">Upload Picture</button>
                             <button form="imgDelete3" style="height: 38px" class="btn-danger ">Delete</button>
                         </div>
                     </div>
@@ -124,7 +126,8 @@
 
                     <!--                    <input form="editPost" id="title3" name="title3" class="form-control" type="text" th:value="${post.postImages[2].imageTitle}">-->
                     <input form="editPost" name="id3" type="hidden" th:field="*{post.postImages[2].id}">
-                    <input form="editPost" id="image3" name="image3" class="form-control" type="url" th:field="*{post.postImages[2].imageUrl}">
+<!--                    <input form="editPost" id="image3" name="image3" class="form-control" type="hidden">-->
+                    <input  form="editPost" id="image3" class="form-control" type="url" th:field="*{post.postImages[2].imageUrl}">
                 </div>
                 <div class="form-group py-1" th:if="${post.postImages.size() > 3}">
                     <label for="image4">Image 4 (Title & Url)</label>
@@ -215,5 +218,6 @@
 
 </div>
 <!--<script th:replace="partials/partials.html :: bootstrap-js"></script>-->
+<div th:replace="partials/partials.html :: mainfooter"></div>
 </body>
 </html>

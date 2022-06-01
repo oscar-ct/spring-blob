@@ -22,6 +22,7 @@ public class Post {
     PostDetails postDetails;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<PostImage> postImages = new ArrayList<>();
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "post_tag",
